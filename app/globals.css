@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
+
+@media (min-width: 1px) {
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter Tight', sans-serif;
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  html,
+  body {
+    max-width: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    background: white;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  h1 {
+    font-size: clamp(20px, 10vw, 24px);
+    font-weight: 700;
+    word-break: break-word;
+    line-height: 1;
+  }
+
+  h2 {
+    font-weight: 500;
+    font-size: 14px;
+    color: #6b6b6b;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 400;
+    display: block;
+  }
+
+  button {
+    background: none;
+    border: 0px;
+    cursor: pointer;
+    transition: 150ms linear;
+  }
+
+  button:hover {
+    color: #2667ff;
+    opacity: 0.6;
+    transition: 150ms linear;
+  }
+
+  input[type="checkbox"],
+  input[type="text"] {
+    all: unset;
+  }
+
+  ::placeholder {
+    color: #6b6b6b;
+  }
+
+  input[type="text"] {
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    padding: 0.6rem 1rem 0.6rem;
+    border-radius: 100px;
+    background: white;
+  }
+
+  input[type="text"]:hover {
+    border: 1px solid #2667ff40;
+  }
+
+  input[type="text"]:focus {
+    border: 1px solid #2667ff80;
+  }
+
+  input[type="checkbox"] {
+    background: none;
+    border-radius: 100px;
+    height: 16px;
+    width: 16px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: 150ms linear;
+  }
+
+  input[type="checkbox"]:checked {
+    border: 1px solid #2667ff40;
+    background: #2667ff80;
+    transition: 150ms linear;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    background: white;
+  }
+
+  tr {
+    border-top: 1px solid #ddd;
+    transition: 150ms linear;
+    text-wrap: nowrap;
+  }
+
+  tr:nth-child(even) {
+    background: #f5f5f580;
+  }
+
+  tbody tr:hover {
+    transition: 150ms linear;
+    background: #2667ff20;
+  }
+
+  th {
+    font-weight: 500;
+    font-size: 14px;
+    padding: 0.6rem;
+    border-right: 1px solid #ddd;
+    text-align: left;
+    color: #6b6b6b;
+    background: #f5f5f580;
+  }
+
+  td {
+    font-size: clamp(12px, 1vw, 16px);
+    width: fit-content;
+    padding: 0.2rem 0.6rem 0.2rem;
+    border-right: 1px solid #ddd;
+  }
+
+  .container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-holder {
+    min-width: 100%;
+    position: relative;
+    background: white;
+    border: 0px;
+  }
+
+  .page-btn-holder {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    width: 100%;
+    gap: 0;
+    min-height: none;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    border: 0px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .page-btns {
+    display: flex;
+  }
+
+  .nav-holder {
+    text-align: left;
+    position: relative;
+    min-height: auto;
+    background: #f5f5f580;
+  }
+
+  .nav {
+    flex-direction: row;
+    padding: 1rem;
+    gap: 0.4rem;
+    align-items: flex-start;
+    position: relative;
+    border: 0px;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+@media (min-width: 999px) {
+  .container {
+    flex-direction: row;
+  }
+
+  .page-holder {
+    min-width: 5rem;
+    border-right: 1px solid #ddd;
+  }
+
+  .page-btn-holder {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    padding-top: 0.6rem;
+    max-width: 5rem;
+    gap: 0.4rem;
+    min-height: 92vh;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    border: 0px;
+  }
+
+  .page-btns {
+    display: block;
+  }
+
+  .nav-holder {
+    min-height: 100vh;
+  }
+
+  .nav {
+    flex-direction: column;
+    padding: 1rem;
+    min-width: 12rem;
+    gap: 0.4rem;
+    height: 100%;
+    align-items: flex-start;
+    position: fixed;
+    border: 0px;
+    border-right: 1px solid #ddd;
+  }
+
+  .test::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (min-width: 1199px) {
+  p {
+    font-size: 16px;
+  }
+
+  input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+  }
+
+  th {
+    padding: 1rem;
+  }
+
+  td {
+    padding: 0.4rem 1rem 0.4rem;
+  }
+}
