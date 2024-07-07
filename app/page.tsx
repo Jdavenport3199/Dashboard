@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import styles from "./page.module.css";
 import { useState } from "react";
 
 export default function Home() {
@@ -21,6 +20,78 @@ export default function Home() {
     setClient(false);
   };
 
+  const generateData = () => {
+    const baseData = [
+      {
+        id: 1,
+        name: "John Smith",
+        company: "ABC Corporation",
+        priority: "High",
+        priorityColor: "#9A031E",
+        phone: "123-456-7890",
+        email: "john.smith@example.com",
+      },
+      {
+        id: 2,
+        name: "Alice Johnson",
+        company: "XYZ Industries",
+        priority: "Medium",
+        priorityColor: "#DC965A",
+        phone: "987-654-3210",
+        email: "alice.johnson@example.com",
+      },
+      {
+        id: 3,
+        name: "Michael Williams",
+        company: "Acme Co",
+        priority: "High",
+        priorityColor: "#9A031E",
+        phone: "555-123-4567",
+        email: "michael.williams@example.com",
+      },
+      {
+        id: 4,
+        name: "Sarah Brown",
+        company: "Global Solutions",
+        priority: "Low",
+        priorityColor: "#2667ff",
+        phone: "111-222-3333",
+        email: "sarah.brown@example.com",
+      },
+    ];
+
+    const data = [];
+    for (let i = 0; i < 40; i++) {
+      const item = { ...baseData[i % baseData.length], id: i + 1 };
+      data.push(item);
+    }
+    return data;
+  };
+
+  const data = generateData();
+
+  const getPriorityStyles = (priority: any) => {
+    switch (priority) {
+      case "High":
+        return {
+          color: "#9A031E",
+          background: "#9A031E40",
+        };
+      case "Medium":
+        return {
+          color: "#DC965A",
+          background: "#DC965A40",
+        };
+      case "Low":
+        return {
+          color: "#2667ff",
+          background: "#2667ff40",
+        };
+      default:
+        return {};
+    }
+  };
+
   return (
     <main>
       <div
@@ -29,15 +100,25 @@ export default function Home() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          gap: "0.4rem",
+          gap: "0.8rem",
           borderBottom: "1px solid #ddd",
+          borderRight: "1px solid #ddd",
           background: "white",
           zIndex: "2",
+          position: "fixed",
+          top: "0",
+          width: "100%",
         }}
       >
-        <div style={{ display: "flex", gap: "0.4rem", alignItems: "baseline" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "0.2rem 1.2rem",
+            alignItems: "baseline",
+            flexWrap: "wrap",
+          }}
+        >
           <h1>Global Enterprises</h1>
-          <h2>/&ensp;Dashboard</h2>
         </div>
         <Image
           src={"/profile.png"}
@@ -47,6 +128,7 @@ export default function Home() {
           style={{ borderRadius: "100px" }}
         ></Image>
       </div>
+
       <div className="container">
         <div className="page-holder">
           <div className="page-btn-holder">
@@ -165,7 +247,7 @@ export default function Home() {
             <button
               style={{
                 fontWeight: 500,
-                fontSize: "14x",
+                fontSize: "14px",
                 padding: "0.6rem 1.2rem 0.6rem",
                 display: "flex",
                 alignItems: "center",
@@ -195,7 +277,6 @@ export default function Home() {
             display: contact ? "none" : " ",
             width: "100%",
             overflowX: "hidden",
-            height: "100vh",
           }}
         >
           <div
@@ -207,11 +288,9 @@ export default function Home() {
               padding: "1rem 1rem 1rem",
               width: "100%",
               borderBottom: "1px solid #ddd",
-              gap: "0.4rem",
+              borderRight: "1px solid #ddd",
+              gap: "0.8rem",
               flexWrap: "wrap",
-              position: "sticky",
-              top: "0px",
-              zIndex: 4,
             }}
           >
             <div
@@ -222,7 +301,10 @@ export default function Home() {
                 flexWrap: "wrap",
               }}
             >
-              <button style={{ padding: "0.4rem" }} onClick={toggleSideNave}>
+              <button
+                style={{ padding: "0.6rem 0.8rem 0.6rem" }}
+                onClick={toggleSideNave}
+              >
                 <i className="fa-solid fa-sliders fa-lg"></i>
               </button>
               <input type="text" placeholder="Search" />
@@ -273,11 +355,10 @@ export default function Home() {
             <div style={{ display: "flex", gap: "0.8rem" }}>
               <button
                 style={{
-                  border: "1px solid #ddd",
-                  padding: "0.6rem 1rem 0.6rem",
-                  borderRadius: "100px",
+                  fontWeight: 500,
                   fontSize: "14px",
-                  fontWeight: "500",
+                  padding: "0.6rem 0.8rem 0.6rem",
+                  borderRadius: "100px",
                 }}
               >
                 <i className="fa-solid fa-highlighter"></i>&nbsp;Edit
@@ -310,1642 +391,79 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td
-                    style={{
-                      textAlign: "center",
-                      padding: "0",
-                      width: "24px",
-                      height: "24px",
-                    }}
-                  >
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
+                {data.map((person) => (
+                  <tr key={person.id}>
+                    <td
+                      style={{
+                        textAlign: "center",
+                        padding: "0.4rem",
+                        width: "24px",
+                        height: "24px",
+                      }}
+                    >
+                      <input type="checkbox" />
+                    </td>
+                    <td>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.4rem",
+                        }}
+                      >
+                        <Image
+                          src={"/profile.png"}
+                          width={"25"}
+                          height={"25"}
+                          alt={""}
+                          style={{ borderRadius: "100px" }}
+                        ></Image>
+                        {person.name}
+                      </div>
+                    </td>
+                    <td>{person.company}</td>
+                    <td
+                      style={{
+                        color: getPriorityStyles(person.priority).color,
+                      }}
+                    >
+                      <span
+                        style={{
+                          background: getPriorityStyles(person.priority)
+                            .background,
+                          borderRadius: "20px",
+                          padding: "0.4rem 1rem 0.4rem",
+                          fontSize: "14px",
+                          fontWeight: "500",
+                        }}
+                      >
+                        {person.priority}
+                      </span>
+                    </td>
+                    <td>{person.phone}</td>
+                    <td
                       style={{
                         display: "flex",
+                        justifyContent: "space-between",
                         alignItems: "center",
+                        width: "100%",
                         gap: "0.4rem",
                       }}
                     >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      John Smith
-                    </div>
-                  </td>
-                  <td>ABC Corporation</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>123-456-7890</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    john.smith@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Alice Johnson
-                    </div>
-                  </td>
-                  <td>XYZ Industries</td>
-                  <td style={{ color: "#DC965A" }}>
-                    <span
-                      style={{
-                        background: "#DC965A40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Medium
-                    </span>
-                  </td>
-                  <td>987-654-3210</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    alice.johnson@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Michael Williams
-                    </div>
-                  </td>
-                  <td>Acme Co</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>555-123-4567</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    michael.williams@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Sarah Brown
-                    </div>
-                  </td>
-                  <td>Global Solutions</td>
-                  <td style={{ color: "#2667ff" }}>
-                    <span
-                      style={{
-                        background: "#2667ff40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Low
-                    </span>
-                  </td>
-                  <td>111-222-3333</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    sarah.brown@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td
-                    style={{
-                      textAlign: "center",
-                      padding: "0",
-                      width: "24px",
-                      height: "24px",
-                    }}
-                  >
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      John Smith
-                    </div>
-                  </td>
-                  <td>ABC Corporation</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>123-456-7890</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    john.smith@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Alice Johnson
-                    </div>
-                  </td>
-                  <td>XYZ Industries</td>
-                  <td style={{ color: "#DC965A" }}>
-                    <span
-                      style={{
-                        background: "#DC965A40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Medium
-                    </span>
-                  </td>
-                  <td>987-654-3210</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    alice.johnson@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Michael Williams
-                    </div>
-                  </td>
-                  <td>Acme Co</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>555-123-4567</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    michael.williams@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Sarah Brown
-                    </div>
-                  </td>
-                  <td>Global Solutions</td>
-                  <td style={{ color: "#2667ff" }}>
-                    <span
-                      style={{
-                        background: "#2667ff40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Low
-                    </span>
-                  </td>
-                  <td>111-222-3333</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    sarah.brown@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    style={{
-                      textAlign: "center",
-                      padding: "0",
-                      width: "24px",
-                      height: "24px",
-                    }}
-                  >
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      John Smith
-                    </div>
-                  </td>
-                  <td>ABC Corporation</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>123-456-7890</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    john.smith@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Alice Johnson
-                    </div>
-                  </td>
-                  <td>XYZ Industries</td>
-                  <td style={{ color: "#DC965A" }}>
-                    <span
-                      style={{
-                        background: "#DC965A40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Medium
-                    </span>
-                  </td>
-                  <td>987-654-3210</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    alice.johnson@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Michael Williams
-                    </div>
-                  </td>
-                  <td>Acme Co</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>555-123-4567</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    michael.williams@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Sarah Brown
-                    </div>
-                  </td>
-                  <td>Global Solutions</td>
-                  <td style={{ color: "#2667ff" }}>
-                    <span
-                      style={{
-                        background: "#2667ff40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Low
-                    </span>
-                  </td>
-                  <td>111-222-3333</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    sarah.brown@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    style={{
-                      textAlign: "center",
-                      padding: "0",
-                      width: "24px",
-                      height: "24px",
-                    }}
-                  >
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      John Smith
-                    </div>
-                  </td>
-                  <td>ABC Corporation</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>123-456-7890</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    john.smith@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Alice Johnson
-                    </div>
-                  </td>
-                  <td>XYZ Industries</td>
-                  <td style={{ color: "#DC965A" }}>
-                    <span
-                      style={{
-                        background: "#DC965A40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Medium
-                    </span>
-                  </td>
-                  <td>987-654-3210</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    alice.johnson@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Michael Williams
-                    </div>
-                  </td>
-                  <td>Acme Co</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>555-123-4567</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    michael.williams@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Sarah Brown
-                    </div>
-                  </td>
-                  <td>Global Solutions</td>
-                  <td style={{ color: "#2667ff" }}>
-                    <span
-                      style={{
-                        background: "#2667ff40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Low
-                    </span>
-                  </td>
-                  <td>111-222-3333</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    sarah.brown@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    style={{
-                      textAlign: "center",
-                      padding: "0",
-                      width: "24px",
-                      height: "24px",
-                    }}
-                  >
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      John Smith
-                    </div>
-                  </td>
-                  <td>ABC Corporation</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>123-456-7890</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    john.smith@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Alice Johnson
-                    </div>
-                  </td>
-                  <td>XYZ Industries</td>
-                  <td style={{ color: "#DC965A" }}>
-                    <span
-                      style={{
-                        background: "#DC965A40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Medium
-                    </span>
-                  </td>
-                  <td>987-654-3210</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    alice.johnson@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Michael Williams
-                    </div>
-                  </td>
-                  <td>Acme Co</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>555-123-4567</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    michael.williams@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Sarah Brown
-                    </div>
-                  </td>
-                  <td>Global Solutions</td>
-                  <td style={{ color: "#2667ff" }}>
-                    <span
-                      style={{
-                        background: "#2667ff40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Low
-                    </span>
-                  </td>
-                  <td>111-222-3333</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    sarah.brown@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    style={{
-                      textAlign: "center",
-                      padding: "0",
-                      width: "24px",
-                      height: "24px",
-                    }}
-                  >
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      John Smith
-                    </div>
-                  </td>
-                  <td>ABC Corporation</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>123-456-7890</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    john.smith@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Alice Johnson
-                    </div>
-                  </td>
-                  <td>XYZ Industries</td>
-                  <td style={{ color: "#DC965A" }}>
-                    <span
-                      style={{
-                        background: "#DC965A40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Medium
-                    </span>
-                  </td>
-                  <td>987-654-3210</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    alice.johnson@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Michael Williams
-                    </div>
-                  </td>
-                  <td>Acme Co</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>555-123-4567</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    michael.williams@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Sarah Brown
-                    </div>
-                  </td>
-                  <td>Global Solutions</td>
-                  <td style={{ color: "#2667ff" }}>
-                    <span
-                      style={{
-                        background: "#2667ff40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Low
-                    </span>
-                  </td>
-                  <td>111-222-3333</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    sarah.brown@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Alice Johnson
-                    </div>
-                  </td>
-                  <td>XYZ Industries</td>
-                  <td style={{ color: "#DC965A" }}>
-                    <span
-                      style={{
-                        background: "#DC965A40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Medium
-                    </span>
-                  </td>
-                  <td>987-654-3210</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    alice.johnson@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Michael Williams
-                    </div>
-                  </td>
-                  <td>Acme Co</td>
-                  <td style={{ color: "#9A031E" }}>
-                    <span
-                      style={{
-                        background: "#9A031E40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      High
-                    </span>
-                  </td>
-                  <td>555-123-4567</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    michael.williams@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                      }}
-                    >
-                      <Image
-                        src={"/profile.png"}
-                        width={"25"}
-                        height={"25"}
-                        alt={""}
-                        style={{ borderRadius: "100px" }}
-                      ></Image>
-                      Sarah Brown
-                    </div>
-                  </td>
-                  <td>Global Solutions</td>
-                  <td style={{ color: "#2667ff" }}>
-                    <span
-                      style={{
-                        background: "#2667ff40",
-                        borderRadius: "20px",
-                        padding: "0.4rem 1rem 0.4rem",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Low
-                    </span>
-                  </td>
-                  <td>111-222-3333</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      gap: "0.4rem",
-                    }}
-                  >
-                    sarah.brown@example.com{" "}
-                    <button
-                      style={{
-                        fontWeight: 500,
-                        fontSize: "14px",
-                        padding: "0.4rem 0.5rem 0.4rem",
-                        borderRadius: "100px",
-                      }}
-                    >
-                      <i className="fa-solid fa-gears"></i>
-                    </button>
-                  </td>
-                </tr>
+                      {person.email}{" "}
+                      <button
+                        style={{
+                          fontWeight: 500,
+                          fontSize: "14px",
+                          padding: "0.4rem 0.5rem 0.4rem",
+                          borderRadius: "100px",
+                        }}
+                      >
+                        <i className="fa-solid fa-gears"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
