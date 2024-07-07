@@ -120,13 +120,13 @@ export default function Home() {
         >
           <h1>Global Enterprises</h1>
         </div>
-        <Image
+        <img
           src={"/profile.png"}
           width={"35"}
           height={"35"}
           alt={""}
           style={{ borderRadius: "100px" }}
-        ></Image>
+        />
       </div>
 
       <div className="container">
