@@ -120,13 +120,13 @@ export default function Home() {
         >
           <h1>Global Enterprises</h1>
         </div>
-        <img
-          src={"/profile.png"}
+        <Image
+          src={"/static/images/profile.png"}
           width={"35"}
           height={"35"}
           alt={""}
           style={{ borderRadius: "100px" }}
-        />
+        ></Image>
       </div>
 
       <div className="container">
@@ -412,7 +412,7 @@ export default function Home() {
                         }}
                       >
                         <Image
-                          src={"/profile.png"}
+                          src={"/static/images/profile.png"}
                           width={"25"}
                           height={"25"}
                           alt={""}
